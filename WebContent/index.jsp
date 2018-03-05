@@ -21,7 +21,7 @@
         <%@include file="./layout/nav.jsp" %>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+          <!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
           	
             <h1 class="h2">Dashboard</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
@@ -34,31 +34,74 @@
                 This week
               </button>
             </div>
-          </div>
+          </div> -->
 
-		<div class="row">
+		<div class="row dash-container">
 			<div class="col main-dash-box">
+				<div class="dash-title">
+					Animal BBS
+				</div>
+				<div class="dash-content">
+				
+				</div>
 			</div>
 			<div class="col main-dash-box">
+				<div class="dash-title">
+					After BBS
+				</div>
+				<div class="dash-content">
+				
+				</div>
 			</div>
 			<div class="col main-dash-box">
+				<div class="dash-title">
+					Community BBS
+				</div>
+				<div class="dash-content">
+				
+				</div>
 			</div>
 			<div class="col main-dash-box">
+				<div class="dash-title">
+					Completed
+				</div>
+				<div class="dash-content">
+				
+				</div>
 			</div>
 			<div class="col main-dash-box">
+				<div class="dash-title">
+					Users
+				</div>
+				<div class="dash-content">
+				
+				</div>
+			</div>
+		</div>
+		
+		<hr>
+		
+		<div class="row justify-content-between chart-container">
+			<div class="col-md-3">
+				<h4>기간별 게시글 Report</h4>
 			</div>
 			
+			<div class="dropdown">
+				<button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span data-feather="database"></span>&nbsp;&nbsp;게시판 선택
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="#" onclick="changeAnimalBbs()">분양글</a> 
+					<a class="dropdown-item" href="#" onclick="changeAfterBbs()">분양 후기</a> 
+					<a class="dropdown-item" href="#" onclick="changeCommuBbs()">커뮤니티</a>
+				</div>
+			</div>
 		</div>
-          <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
+		<canvas class="my-4" id="myChart" width="900" height="380"></canvas>
         </main>
       </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-      <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -73,61 +116,86 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
     		$(document).ready(function () {
-    			var chartdata = '';
-    			
+    			drowInfo();
+    			changeAnimalBbs();
+		});
+    		
+    		function drowInfo() {
 			$.ajax({
 				url : 'AdminControl',
-				data : { command : 'mainChart' },
 				method : 'POST',
+				data : { command: 'drowInfo' },
 				success : function (data) {
-					chartdata = JSON.parse(data);
+					var info = JSON.parse(data);
+					var dashbox = $('div.main-dash-box div.dash-content');
 					
-					var dashbox = $('div.main-dash-box');
-					dashbox[0].innerText = chartdata.counts.animalCount;
-					dashbox[1].innerText = chartdata.counts.afterCount;
-					dashbox[2].innerText = chartdata.counts.commuCount;
-					dashbox[3].innerText = chartdata.counts.completeCount;
-					dashbox[4].innerText = chartdata.counts.userCount;
-					
-					var labels = [];
-					var dateCounts = [];
-					for(var i=0; i<chartdata.days.length; i++){
-						labels[i] = chartdata.days[i].date;
-						dateCounts[i] = chartdata.days[i].count;
-					}
-					
-					
-					var ctx = document.getElementById("myChart");
-				      var myChart = new Chart(ctx, {
-				        type: 'line',
-				        data: {
-				          labels: labels,
-				          datasets: [{
-				            data: dateCounts,
-				            lineTension: 0,
-				            backgroundColor: 'transparent',
-				            borderColor: '#007bff',
-				            borderWidth: 5,
-				            pointBackgroundColor: '#007bff'
-				          }]
-				        },
-				        options: {
-				          scales: {
-				            yAxes: [{
-				              ticks: {
-				                beginAtZero: false
-				              }
-				            }]
-				          },
-				          legend: {
-				            display: false,
-				          }
-				        }
-				      });
+					dashbox[0].innerText = info.animalCount;
+					dashbox[1].innerText = info.afterCount;
+					dashbox[2].innerText = info.commuCount;
+					dashbox[3].innerText = info.completeCount;
+					dashbox[4].innerText = info.userCount;
 				}
-			})		
-		});
-    </script>
-  </body>
-  
+			})
+		}
+    		
+    		function changeAnimalBbs() {
+			drowChart('animalbbs');
+		}
+    		
+    		function changeAfterBbs() {
+			drowChart('afterbbs');	
+		}
+    		
+    		function changeCommuBbs() {
+			drowChart('commubbs');
+		}
+    		
+    		function drowChart(table) {
+    			$.ajax({
+    				url : 'AdminControl',
+    				data : { command : 'drowChart', table : table },
+    				method : 'POST',
+    				success : function (data) {
+    					var chartdata = JSON.parse(data);
+    					
+    					var labels = [];
+    					var dateCounts = [];
+    					for(var i=0; i<chartdata.length; i++){
+    						labels[i] = chartdata[i].date;
+    						dateCounts[i] = chartdata[i].count;
+    					}
+    					
+					var ctx = document.getElementById("myChart");
+					var myChart = new Chart(ctx, {
+						type: 'line',
+						data: {
+							labels: labels,
+							datasets: [{
+								data: dateCounts,
+								lineTension: 0,
+								backgroundColor: 'transparent',
+								borderColor: '#007bff',
+								borderWidth: 5,
+								pointBackgroundColor: '#007bff'
+							}]
+						},
+						options: {
+							scales: {
+								yAxes: [{
+									ticks: {
+										beginAtZero: false
+									}
+								}]
+							},
+							legend:{
+								display:false,
+							}
+						}
+					});
+    				}
+    			});
+		}
+</script>
+</body>
+
 </html>

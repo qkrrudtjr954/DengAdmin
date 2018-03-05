@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import dao.AdminDao;
+import dto.CalendarDto;
 import dto.GraphDayDto;
 
 public class AdminService {
@@ -37,7 +38,19 @@ public class AdminService {
 		return returnMap;
 	}
 	
-	public List<GraphDayDto> getDateCount(){
-		return adminDao.getDateCount();
+	public List<GraphDayDto> getDateCount(String table){
+		return adminDao.getDateCount(table);
+	}
+	
+	public List<CalendarDto> getEvents(){
+		return adminDao.getEvents();
+	}
+	
+	public CalendarDto getEvent(int seq){
+		return adminDao.getEvent(seq);
+	}
+	
+	public boolean addEvent(CalendarDto cal) {
+		return adminDao.addEvent(cal);
 	}
 }

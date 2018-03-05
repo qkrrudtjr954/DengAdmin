@@ -10,12 +10,17 @@
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="AdminControl?command=animalList"> 
-					<span data-feather="file"></span> 분양글 전부 보기
+					<span data-feather="github"></span> 분양글 전부 보기
 				</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="AdminControl?command=afterList"> 
-					<span data-feather="shopping-cart"></span> 분양 완료 글 전부 보기
+					<span data-feather="heart"></span> 분양 완료 글 전부 보기
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="AdminControl?command=afterList"> 
+					<span data-feather="message-circle"></span> 커뮤니티 전부 보기
 				</a>
 			</li>
 			<li class="nav-item">
@@ -25,7 +30,12 @@
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="AdminControl?command=badWord"> 
-					<span data-feather="bar-chart-2"></span> 나쁜말 사전
+					<span data-feather="book"></span> 나쁜말 사전
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="AdminControl?command=calendar"> 
+					<span data-feather="calendar"></span> 행사 일정 등록 
 				</a>
 			</li>
 		</ul>
