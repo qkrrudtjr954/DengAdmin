@@ -40,6 +40,8 @@ public class AdminController extends HttpServlet {
 			
 		} else if(command.equals("afterList")) {
 			
+		} else if(command.equals("main")) {
+			dispatcher("index.jsp", req, resp);
 		} else if(command.equals("userList")) {
 			
 		} else if(command.equals("badWord")) {

@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
-  <display-name>DengAdmin</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
-  
-  <servlet>
-  	<servlet-name>adminControl</servlet-name>
-  	<servlet-class>controller.AdminController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>adminControl</servlet-name>
-  	<url-pattern>/AdminControl</url-pattern>
-  </servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>DengAdmin</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	<context-param>
+		<description>daum api key</description>
+		<param-name>DAUM_API_KEY</param-name>
+		<param-value>6a9f9d0784be5dac2543ae6ee19f9047</param-value>
+	</context-param>
+
+	<context-param>
+		<description>image server url</description>
+		<param-name>IMG_SERVER_PATH</param-name>
+		<param-value>http://192.168.10.43:3000</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>adminControl</servlet-name>
+		<servlet-class>controller.AdminController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adminControl</servlet-name>
+		<url-pattern>/AdminControl</url-pattern>
+	</servlet-mapping>
 </web-app>
