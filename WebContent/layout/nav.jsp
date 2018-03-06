@@ -19,7 +19,7 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="AdminControl?command=afterList"> 
+				<a class="nav-link" href="AdminControl?command=commuList"> 
 					<span data-feather="message-circle"></span> 커뮤니티 전부 보기
 				</a>
 			</li>

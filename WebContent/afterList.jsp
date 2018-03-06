@@ -26,7 +26,7 @@
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 			<div
 				class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-				<h1 class="h2">Animal List</h1>
+				<h1 class="h2">After List</h1>
 				<div class="btn-toolbar mb-2 mb-md-0">
 					<div class="btn-group mr-2">
 						<button class="btn btn-sm btn-outline-secondary">Share</button>
@@ -46,23 +46,21 @@
 							<th>No.</th>
 							<th>Title</th>
 							<th>User</th>
-							<th>Status</th>
 							<th>Reg Date</th>
 							<th>Detail</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${animalList }" varStatus="i" var="item">
+						<c:forEach items="${afterList }" varStatus="i" var="item">
 							<tr>
 								<td>${i.index+1 }</td>
 								<td>${item.title }</td>
 								<td>${item.user_email }</td>
-								<td>${item.del == 200 ? 'success' : 'not yet' }</td>
 								<fmt:parseDate value="${item.reg_date }" pattern="yyyy-MM-dd HH:mm:ss.S" var="tempRegDate"/>
 								<fmt:formatDate value="${tempRegDate }" pattern="yyyy년 MM월 dd일" var="regDate"/>
 								<td>${regDate }</td>
 								<td>
-									<a href="AdminControl?command=animalDetail&seq=${item.seq }" class="btn btn-outline-secondary">상세 보기</a>
+									<a href="AdminControl?command=afterDetail&seq=${item.seq }" class="btn btn-outline-secondary">상세 보기</a>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -87,7 +85,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
         $('#myTable').DataTable( {
-	            "order": [[ 1, "asc" ]]
+	            "order": [[ 3, "desc" ]]
 	        } );
 	    } );
     </script>

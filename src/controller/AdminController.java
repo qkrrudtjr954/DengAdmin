@@ -13,8 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import dto.AfterBbsDto;
+import dto.AnimalBbsDto;
+import dto.BadWord;
 import dto.CalendarDto;
+import dto.CommuBbsDto;
 import dto.GraphDayDto;
+import dto.User;
 import service.AdminService;
 
 public class AdminController extends HttpServlet {
@@ -36,19 +41,42 @@ public class AdminController extends HttpServlet {
 		
 		String command = req.getParameter("command");
 		
-		if(command.equals("animalList")) {
+		if(command.equals("main")) {
+			dispatcher("index.jsp", req, resp);
+		} else if(command.equals("animalList")) {
 			
+			AdminService adminService = AdminService.getInstance();
+			List<AnimalBbsDto> animalList = adminService.getAllAnimalBbs();
+			
+			req.setAttribute("animalList", animalList);
+			dispatcher("animalList.jsp", req, resp);
 		} else if(command.equals("afterList")) {
 			
-		} else if(command.equals("main")) {
-			dispatcher("index.jsp", req, resp);
+			AdminService adminService = AdminService.getInstance();
+			List<AfterBbsDto> afterList = adminService.getAllAfterBbs();
+			
+			req.setAttribute("afterList", afterList);
+			dispatcher("afterList.jsp", req, resp);
+		} else if(command.equals("commuList")) {
+			
+			AdminService adminService = AdminService.getInstance();
+			List<CommuBbsDto> commuList = adminService.getAllCommuBbs();
+			
+			req.setAttribute("commuList", commuList);
+			dispatcher("commuList.jsp", req, resp);
 		} else if(command.equals("userList")) {
+			AdminService adminService = AdminService.getInstance();
+			List<User> userList = adminService.getAllUser();
 			
-		} else if(command.equals("badWord")) {
-			
+			req.setAttribute("userList", userList);
+			dispatcher("userList.jsp", req, resp);
 		} else if(command.equals("calendar")) {
 			
 			dispatcher("calendar.jsp", req, resp);
+			
+		} else if(command.equals("badWord")) {
+			
+			dispatcher("badword.jsp", req, resp);
 			
 		} else if(command.equals("drowInfo")) {
 			AdminService adminService = AdminService.getInstance();
@@ -108,6 +136,32 @@ public class AdminController extends HttpServlet {
 			resp.addCookie(cookie);
 			resp.sendRedirect("AdminControl?command=calendar");
 			
+		} else if(command.equals("getBadWords")) {
+			AdminService adminService = AdminService.getInstance();
+			List<BadWord> badwords = adminService.getAllBadWord();
+			
+			String json = new Gson().toJson(badwords);
+			
+			resp.getWriter().write(json);
+		} else if(command.equals("addBadWord")) {
+			String word = req.getParameter("word");
+			
+			AdminService adminService = AdminService.getInstance();
+			boolean result = adminService.addBadWord(word);
+			
+			String json = new Gson().toJson(result);
+			
+			resp.getWriter().write(json);
+		} else if(command.equals("deleteBadWord")) {
+			String sseq = req.getParameter("seq");
+			int seq = Integer.parseInt(sseq);
+			
+			AdminService adminService = AdminService.getInstance();
+			boolean result = adminService.deleteBadWord(seq);
+			
+			String json = new Gson().toJson(result);
+			
+			resp.getWriter().write(json);
 		}
 	}
 	

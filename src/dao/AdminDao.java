@@ -12,6 +12,7 @@ import java.util.List;
 
 import db.DBClose;
 import db.DBConnection;
+import dto.BadWord;
 import dto.CalendarDto;
 import dto.GraphDayDto;
 
@@ -294,6 +295,79 @@ public class AdminDao {
 			DBClose.close(psmt, conn, null);
 		}
 		return (count > 0)?true:false;
+	}
+
+	public List<BadWord> getAllBadWord() {
+		String sql = " select * from badword ";
+		
+		List<BadWord> list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		conn = DBConnection.makeConnection();
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				BadWord dto = new BadWord();
+				dto.setSeq(rs.getInt("seq"));
+				dto.setWord(rs.getString("word"));
+				
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	}
+
+	public boolean addBadWord(String word) {
+		String sql = " insert into badword(seq, word) values(badword_seq.nextval, ?) ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		conn = DBConnection.makeConnection();
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, word);
+			count = psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		return (count > 0)?true : false;
+		
+	}
+	
+	public boolean deleteBadWord(int seq) {
+		String sql = " delete from badword where seq = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		conn = DBConnection.makeConnection();
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			count = psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		return (count > 0)?true : false;
 	}
 		
 }

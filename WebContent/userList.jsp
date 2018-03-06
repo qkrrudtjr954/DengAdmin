@@ -38,35 +38,34 @@
 				</div>
 			</div>
 
-
-			<div class="table-responsive">
-				<table class="table table-striped table-sm" id="myTable">
-					<thead>
-						<tr>
-							<th>No.</th>
-							<th>Title</th>
-							<th>User</th>
-							<th>Status</th>
-							<th>Reg Date</th>
-							<th>Detail</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${animalList }" varStatus="i" var="item">
+			<div class="row">
+			
+				<div class="table-responsive col">
+					<table class="table table-striped table-sm" id="myTable">
+						<thead>
 							<tr>
-								<td>${i.index+1 }</td>
-								<td>${item.title }</td>
-								<td>${item.user_email }</td>
-								<td>${item.del == 200 ? 'success' : 'not yet' }</td>
-								<fmt:parseDate value="${item.reg_date }" pattern="yyyy-MM-dd HH:mm:ss.S" var="tempRegDate"/>
-								<fmt:formatDate value="${tempRegDate }" pattern="yyyy년 MM월 dd일" var="regDate"/>
-								<td>${regDate }</td>
-								<td>
-									<a href="AdminControl?command=animalDetail&seq=${item.seq }" class="btn btn-outline-secondary">상세 보기</a>
+								<th>No.</th>
+								<th>email</th>
+								<th>Reg Date</th>
+								<th>Detail</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							<c:forEach items="${userList }" varStatus="i" var="user">
+								<tr>
+									<td>${i.index+1 }</td>
+									<td>${user.email }</td>
+									<fmt:parseDate value="${user.reg_date }" pattern="yyyy-MM-dd HH:mm:ss.S" var="tempRegDate"/>
+									<fmt:formatDate value="${tempRegDate }" pattern="yyyy년 MM월 dd일" var="regDate"/>
+									<td>${regDate }</td>
+									<td>
+										<a href="AdminControl?command=userDetail&seq=${user.seq }" class="btn btn-outline-secondary">상세 보기</a>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			</main>
 		</div>
@@ -85,11 +84,11 @@
     </script>
     
     <script type="text/javascript">
-    $(document).ready(function() {
-        $('#myTable').DataTable( {
-	            "order": [[ 1, "asc" ]]
-	        } );
-	    } );
+	$(document).ready(function() {
+		$('#myTable').DataTable({
+			"order": [[ 1, "asc" ]]
+		});
+	});
     </script>
 </body>
 

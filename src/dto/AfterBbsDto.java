@@ -27,32 +27,17 @@ public class AfterBbsDto implements Serializable {
 	private String reg_date; 
 	private String last_update; 
 	private int del;
-	private int readcond;
+	private int read_count;
 	private String user_email;
 	
 	
-	
-	
-	
-	public AfterBbsDto() {}
-
-
-
-
-
-	public AfterBbsDto(String title, String content, int target_user_seq) {
-		super();
-		this.title = title;
-		this.content = content;
-		this.target_user_seq = target_user_seq;
+	public AfterBbsDto() {
+		// TODO Auto-generated constructor stub
 	}
 
 
-
-
-
 	public AfterBbsDto(int seq, String title, String pic1, String content, int target_user_seq, String reg_date,
-			String last_update, int del, int readcond, String user_email) {
+			String last_update, int del, int read_count, String user_email) {
 		super();
 		this.seq = seq;
 		this.title = title;
@@ -62,12 +47,9 @@ public class AfterBbsDto implements Serializable {
 		this.reg_date = reg_date;
 		this.last_update = last_update;
 		this.del = del;
-		this.readcond = readcond;
+		this.read_count = read_count;
 		this.user_email = user_email;
 	}
-
-
-
 
 
 	public int getSeq() {
@@ -75,15 +57,9 @@ public class AfterBbsDto implements Serializable {
 	}
 
 
-
-
-
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
-
-
-
 
 
 	public String getTitle() {
@@ -91,15 +67,9 @@ public class AfterBbsDto implements Serializable {
 	}
 
 
-
-
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-
-
 
 
 	public String getPic1() {
@@ -107,15 +77,9 @@ public class AfterBbsDto implements Serializable {
 	}
 
 
-
-
-
 	public void setPic1(String pic1) {
 		this.pic1 = pic1;
 	}
-
-
-
 
 
 	public String getContent() {
@@ -123,15 +87,9 @@ public class AfterBbsDto implements Serializable {
 	}
 
 
-
-
-
 	public void setContent(String content) {
 		this.content = content;
 	}
-
-
-
 
 
 	public int getTarget_user_seq() {
@@ -139,15 +97,9 @@ public class AfterBbsDto implements Serializable {
 	}
 
 
-
-
-
 	public void setTarget_user_seq(int target_user_seq) {
 		this.target_user_seq = target_user_seq;
 	}
-
-
-
 
 
 	public String getReg_date() {
@@ -155,15 +107,9 @@ public class AfterBbsDto implements Serializable {
 	}
 
 
-
-
-
 	public void setReg_date(String reg_date) {
 		this.reg_date = reg_date;
 	}
-
-
-
 
 
 	public String getLast_update() {
@@ -171,15 +117,9 @@ public class AfterBbsDto implements Serializable {
 	}
 
 
-
-
-
 	public void setLast_update(String last_update) {
 		this.last_update = last_update;
 	}
-
-
-
 
 
 	public int getDel() {
@@ -187,31 +127,19 @@ public class AfterBbsDto implements Serializable {
 	}
 
 
-
-
-
 	public void setDel(int del) {
 		this.del = del;
 	}
 
 
-
-
-
-	public int getReadcond() {
-		return readcond;
+	public int getRead_count() {
+		return read_count;
 	}
 
 
-
-
-
-	public void setReadcond(int readcond) {
-		this.readcond = readcond;
+	public void setRead_count(int read_count) {
+		this.read_count = read_count;
 	}
-
-
-
 
 
 	public String getUser_email() {
@@ -219,46 +147,17 @@ public class AfterBbsDto implements Serializable {
 	}
 
 
-
-
-
 	public void setUser_email(String user_email) {
 		this.user_email = user_email;
 	}
-
-
-
 
 
 	@Override
 	public String toString() {
 		return "AfterBbsDto [seq=" + seq + ", title=" + title + ", pic1=" + pic1 + ", content=" + content
 				+ ", target_user_seq=" + target_user_seq + ", reg_date=" + reg_date + ", last_update=" + last_update
-				+ ", del=" + del + ", readcond=" + readcond + ", user_email=" + user_email + "]";
+				+ ", del=" + del + ", read_count=" + read_count + ", user_email=" + user_email + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-
-
-	
-	
-	
-	
-
-
-	
-
-
-	
 	
 	
 
