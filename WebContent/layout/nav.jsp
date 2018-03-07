@@ -74,7 +74,9 @@
 
 
 <script type="text/javascript">
-	var command = '<%=request.getParameter("command") %>';
+	var temp = '<%=request.getParameter("command") %>';
+	var command = (temp == 'null' || temp == '') ? 'main' : temp;
+	
 	var elements = document.getElements
 	var element = document.getElementById(command);
     element.classList.add("active");

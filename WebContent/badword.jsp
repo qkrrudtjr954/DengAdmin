@@ -68,7 +68,7 @@
 			</div>
 			
 			<div class="row">
-				<div class="col-md-4" style="background: red; style="border: 1px solid lightgray;padding:15px;">
+				<div class="col-md-4" style="border: 1px solid lightgray;padding:15px;">
 					<table class="table table-dark table-striped table-sm" id="animalTable" style="text-align:center;">
 						<thead>
 							<tr>
@@ -83,7 +83,7 @@
 					</table>
 				</div>
 				
-				<div class="col-md-4" style="background: red; style="border: 1px solid lightgray;padding:15px;">
+				<div class="col-md-4" style="border: 1px solid lightgray; padding:15px;">
 					<table class="table table-dark table-striped table-sm" id="afterTable" style="text-align:center;">
 						<thead>
 							<tr>
@@ -98,7 +98,7 @@
 					</table>
 				</div>
 				
-				<div class="col-md-4" style="background: red; style="border: 1px solid lightgray;padding:15px;">
+				<div class="col-md-4" style="border: 1px solid lightgray;padding:15px;">
 					<table class="table table-dark table-striped table-sm" id="commuTable" style="text-align:center;">
 						<thead>
 							<tr>
@@ -207,9 +207,49 @@
 			data : { command : 'getEtcTable', badword : badword },
 			method : 'POST',
 			success : function (data) {
-				var test = JSON.parse(data);
+				var datas = JSON.parse(data);
+				
+				var animal = datas[0];
+				var after = datas[1];
+				var commu = datas[2];
+				
+				drawTableWithData(animal, 1);
+				drawTableWithData(after, 2);
+				drawTableWithData(commu, 3);
+				
 			}
 		})
+	}
+	
+	function drawTableWithData(datas, type) {
+		var url = '';
+		var table = '';
+		
+		if(type == 1){
+			url = 'AdminControl?command=animalDetail&seq=';
+			table = 'animalTable';
+		}else if (type == 2){
+			url = 'AdminControl?command=afterDetail&seq=';
+			table = 'afterTable';
+		}else if(type == 3){
+			url = 'AdminControl?command=commuDetail&seq=';
+			table = 'commuTable';
+		}
+		var result = [];
+		for(var i=0; i<datas.length; i++){
+			var temp = [];
+			temp[0] = i+1;
+			temp[1] = datas[i].user_email;
+			temp[2] = '<a class="btn btn-outline-primary" href="'+url+datas[i].seq+'">상세보기</a>'
+			
+			result[i] = temp;
+		}
+		
+		$('#'+table).DataTable().destroy();
+		$('#'+table).DataTable({
+			"order": [[ 0, "asc" ]],
+			"data" : result
+		});
 	}
 	</script>
 </body>

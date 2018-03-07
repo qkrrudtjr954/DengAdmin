@@ -94,6 +94,7 @@ public class AdminService {
 	public List<Object> getEtcTable(String badword) {
 		List<Object> list = new ArrayList<>();
 
+		System.out.println("AdminServie badword : " + badword);
 		List<AnimalBbsDto> animalList = bbsDao.getAllAnimalBbs(badword);
 		List<AfterBbsDto> afterList = bbsDao.getAllAfterBbs(badword);
 		List<CommuBbsDto> commuList = bbsDao.getAllCommuBbs(badword);

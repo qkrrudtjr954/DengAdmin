@@ -42,7 +42,7 @@
 				//System.out.println(afterDto.toString());
 			%>
 			<div class="table-responsive">
-				<table border="1" id="myTable">
+				<table border="1" id="myTable" class="table table-striped">
 					<tr>
 						<th>No.</th>
 						<td>${afterDto.seq }</td>
