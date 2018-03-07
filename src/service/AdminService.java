@@ -14,6 +14,7 @@ import dto.CalendarDto;
 import dto.Category;
 import dto.CommuBbsDto;
 import dto.GraphDayDto;
+import dto.SendMaster;
 import dto.User;
 
 public class AdminService {
@@ -137,5 +138,21 @@ public class AdminService {
 
 	public boolean deleteCategory(int seq) {
 		return adminDao.deleteCategory(seq);
+	}
+
+	public List<SendMaster> getAllInquiries() {
+		return adminDao.getAllInquiries();
+	}
+
+	public SendMaster getInquiry(int seq) {
+		return adminDao.getInquiry(seq);
+	}
+
+	public boolean addInquiry(int seq, String content) {
+		return adminDao.addInquiry(seq, content);
+	}
+
+	public boolean changeStatus(int seq) {
+		return adminDao.changeStatus(seq);
 	}
 }

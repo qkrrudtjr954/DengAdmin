@@ -20,6 +20,7 @@ import dto.CalendarDto;
 import dto.Category;
 import dto.CommuBbsDto;
 import dto.GraphDayDto;
+import dto.SendMaster;
 import dto.User;
 import service.AdminService;
 
@@ -83,7 +84,11 @@ public class AdminController extends HttpServlet {
 
 			dispatcher("category.jsp", req, resp);
 
-		}else if(command.equals("getCategories")) {
+		} else if(command.equals("sendMaster")) {
+
+			dispatcher("sendMaster.jsp", req, resp);
+
+		} else if(command.equals("getCategories")) {
 
 			AdminService adminService = AdminService.getInstance();
 			List<Category> categories = adminService.getAllCategories();
@@ -229,6 +234,54 @@ public class AdminController extends HttpServlet {
 			AdminService adminService = AdminService.getInstance();
 			boolean result = adminService.deleteCategory(seq);
 			
+			String json = new Gson().toJson(result);
+
+			resp.getWriter().write(json);
+			
+		} else if(command.equals("addInquiry")) {
+
+			String sseq = req.getParameter("seq");
+			int seq = Integer.parseInt(sseq);
+			
+			String content = req.getParameter("content");
+			
+			AdminService adminService = AdminService.getInstance();
+			boolean result = adminService.addInquiry(seq, content);
+			
+			String json = new Gson().toJson(result);
+
+			resp.getWriter().write(json);
+			
+		} else if(command.equals("changeComplete")) {
+
+			String sseq = req.getParameter("seq");
+			int seq = Integer.parseInt(sseq);
+			
+			
+			AdminService adminService = AdminService.getInstance();
+			boolean result = adminService.changeStatus(seq);
+			
+			String json = new Gson().toJson(result);
+
+			resp.getWriter().write(json);
+			
+		} else if(command.equals("getInquiries")) {
+
+			AdminService adminService = AdminService.getInstance();
+			List<SendMaster> result = adminService.getAllInquiries();
+			
+			String json = new Gson().toJson(result);
+
+			resp.getWriter().write(json);
+			
+		} else if(command.equals("getInquiry")) {
+			
+			String sseq = req.getParameter("seq");
+			int seq = Integer.parseInt(sseq);
+			
+			AdminService adminService = AdminService.getInstance();
+			SendMaster result = adminService.getInquiry(seq);
+			System.out.println(result);
 			String json = new Gson().toJson(result);
 
 			resp.getWriter().write(json);

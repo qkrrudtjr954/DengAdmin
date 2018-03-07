@@ -16,6 +16,7 @@ import dto.BadWord;
 import dto.CalendarDto;
 import dto.Category;
 import dto.GraphDayDto;
+import dto.SendMaster;
 
 public class AdminDao {
 
@@ -459,6 +460,132 @@ public class AdminDao {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		int count = 0;
+		
+		conn = DBConnection.makeConnection();
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			
+			count = psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		return (count > 0)?true : false;
+	}
+
+	public List<SendMaster> getAllInquiries() {
+		String sql = " select * from sendmaster ";
+		
+		List<SendMaster> list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		conn = DBConnection.makeConnection();
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				SendMaster sendMaster = new SendMaster();
+				sendMaster.setSeq(rs.getInt("seq"));
+				sendMaster.setCategory(rs.getString("category"));
+				sendMaster.setContent(rs.getString("content"));
+				sendMaster.setEmail(rs.getString("email"));
+				sendMaster.setComplete(rs.getInt("complete"));
+				sendMaster.setTarget_user_seq(rs.getInt("target_user_seq"));
+				sendMaster.setTitle(rs.getString("title"));
+				sendMaster.setAnswer(rs.getString("answer"));
+				
+				list.add(sendMaster);
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		
+		return list;
+	}
+
+	public SendMaster getInquiry(int seq) {
+		String sql = " select * from sendmaster where seq = ?";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		SendMaster sendMaster = new SendMaster();
+		
+		conn = DBConnection.makeConnection();
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				sendMaster.setSeq(rs.getInt("seq"));
+				sendMaster.setCategory(rs.getString("category"));
+				sendMaster.setContent(rs.getString("content"));
+				sendMaster.setComplete(rs.getInt("complete"));
+				sendMaster.setEmail(rs.getString("email"));
+				sendMaster.setTarget_user_seq(rs.getInt("target_user_seq"));
+				sendMaster.setTitle(rs.getString("title"));
+				sendMaster.setAnswer(rs.getString("answer"));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		
+		return sendMaster;
+	}
+
+	public boolean addInquiry(int seq, String content) {
+		String sql = " update sendmaster set answer = ?, complete = 200 where seq = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		System.out.println(".addInquiry() sql : "+sql);
+		
+		conn = DBConnection.makeConnection();
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, content);
+			psmt.setInt(2, seq);
+			
+			count = psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		return (count > 0)?true : false;
+		
+	}
+
+	public boolean changeStatus(int seq) {
+		String sql = " update sendmaster set complete = 0, content = '' where seq = ?";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		System.out.println(".addInquiry() sql : "+sql);
 		
 		conn = DBConnection.makeConnection();
 		try {
