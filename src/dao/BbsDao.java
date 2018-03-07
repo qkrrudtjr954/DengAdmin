@@ -11,6 +11,7 @@ import db.DBClose;
 import db.DBConnection;
 import dto.AfterBbsDto;
 import dto.AnimalBbsDto;
+import dto.BadWord;
 import dto.CommuBbsDto;
 
 public class BbsDao {
@@ -19,7 +20,7 @@ public class BbsDao {
 		DBConnection.initConnect();
 	}
 	
-	public List<AnimalBbsDto> getAllAnimalBbs() {
+	public List<AnimalBbsDto> getAllAnimalBbs(String query) {
 		
 		String sql = " SELECT A.SEQ, A.TITLE, A.NAME, A.AGE, "
 				+ " A.KINDS, A.TYPE, A.LOCATION, A.MEDICINE, A.NEUTRALIZATION, "
@@ -28,6 +29,7 @@ public class BbsDao {
 				+ " A.REG_DATE, A.LAST_UPDATE, A.DEL, A.READCOUNT, B.EMAIL AS USER_EMAIL "
 				+ " FROM ANIMALBBS A, DENGUSER B "
 				+ " WHERE A.TARGET_USER_SEQ = B.SEQ "
+				+ " AND (a.TITLE LIKE '%"+query+"%' OR a.CONTENT LIKE '%"+query+"%' )"
 				+ " ORDER BY REG_DATE DESC ";
 		
 		System.out.println(">>>> BbsDao .getAllAnimalBbs() sql : "+sql);
@@ -35,15 +37,14 @@ public class BbsDao {
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
-		List<AnimalBbsDto> list = new ArrayList<AnimalBbsDto>();
+		List<AnimalBbsDto> list = new ArrayList<>();
 
 		try {
 			conn = DBConnection.makeConnection();
-			System.out.println("1/6 S getAnimalBbsList");
+			
 			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 S getAnimalBbsList");
+			
 			rs = psmt.executeQuery();
-			System.out.println("3/6 S getAnimalBbsList");
 
 			while (rs.next()) {
 				AnimalBbsDto aniBbsDto = new AnimalBbsDto();
@@ -81,14 +82,15 @@ public class BbsDao {
 		return list;
 	}
 
-	public List<AfterBbsDto> getAllAfterBbs() {
+	public List<AfterBbsDto> getAllAfterBbs(String query) {
 		String sql = "SELECT A.SEQ, A.TITLE, A.PIC1, A.CONTENT, A.TARGET_USER_SEQ,  "
 				+ " A.REG_DATE, A.LAST_UPDATE, A.DEL, A.READCOUNT,B.EMAIL AS USER_EMAIL "
 				+ " FROM AFTERBBS A, DENGUSER B  " 
 				+ " WHERE A.TARGET_USER_SEQ = B.SEQ AND DEL=0 "
+				+ " AND (a.TITLE LIKE '%"+query+"%' OR a.CONTENT LIKE '%"+query+"%' )"
 				+ " ORDER BY REG_DATE DESC ";
 
-		List<AfterBbsDto> list = new ArrayList<AfterBbsDto>();
+		List<AfterBbsDto> list = new ArrayList<>();
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -125,18 +127,21 @@ public class BbsDao {
 		return list;
 	}
 
-	public List<CommuBbsDto> getAllCommuBbs() {
+	public List<CommuBbsDto> getAllCommuBbs(String query) {
 		List<CommuBbsDto> list = new ArrayList<>();
 
-		String sql = " SELECT a.seq, a.TITLE as title, target_user_seq, READCOUNT, a.reg_date as reg_date, a.last_update as last_update, a.del, b.title as category_name, c.email as user_email  "
+		String sql = " SELECT a.seq, a.pic1, a.target_category, a.TITLE as title, a.content, a.target_user_seq, a.READCOUNT, a.reg_date as reg_date, a.last_update as last_update, a.del, b.title as category_name, c.email as user_email  "
 				+ " FROM COMMUBBS A, CATEGORY B,  DENGUSER c"
 				+ " WHERE A.TARGET_CATEGORY = B.TARGET_CATEGORY AND a.target_user_seq = c.seq AND a.DEL=0"
+				+ " AND (a.TITLE LIKE '%"+query+"%' OR a.CONTENT LIKE '%"+query+"%' )"
 				+ " ORDER BY a.REG_DATE DESC ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
+		
+		System.out.println(">>>> BbsDao .getAllCommuBbs() sql : "+sql);
 		try {
 			conn = DBConnection.makeConnection();
 
@@ -147,8 +152,8 @@ public class BbsDao {
 			while (rs.next()) {
 				CommuBbsDto dto = new CommuBbsDto();
 				
-				dto.setCategory_name(rs.getString("category_name"));
 				dto.setContent(rs.getString("content"));
+				dto.setCategory_name(rs.getString("category_name"));
 				dto.setDel(rs.getInt("del"));
 				dto.setLast_update(rs.getString("last_update"));
 				dto.setPic1(rs.getString("pic1"));

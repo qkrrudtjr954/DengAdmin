@@ -26,7 +26,7 @@
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 			<div
 				class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-				<h1 class="h2">Animal List</h1>
+				<h1 class="h2">Badword Dictionary</h1>
 				<div class="btn-toolbar mb-2 mb-md-0">
 					<div class="btn-group mr-2">
 						<button class="btn btn-sm btn-outline-secondary">Share</button>
@@ -57,6 +57,7 @@
 								<th>No.</th>
 								<th>Word</th>
 								<th>Delete</th>
+								<th>Check</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -67,23 +68,51 @@
 			</div>
 			
 			<div class="row">
-				<div class="col-md-4" style="background: red;">
-					<table class="table-responseive">
+				<div class="col-md-4" style="background: red; style="border: 1px solid lightgray;padding:15px;">
+					<table class="table table-dark table-striped table-sm" id="animalTable" style="text-align:center;">
 						<thead>
 							<tr>
-								<th>No</th>
+								<th>No.</th>
 								<th>User</th>
 								<th>Detail</th>
 							</tr>
 						</thead>
 						<tbody>
+							
 						</tbody>
 					</table>
 				</div>
-				<div class="col-md-4" style="background: blue;">
+				
+				<div class="col-md-4" style="background: red; style="border: 1px solid lightgray;padding:15px;">
+					<table class="table table-dark table-striped table-sm" id="afterTable" style="text-align:center;">
+						<thead>
+							<tr>
+								<th>No.</th>
+								<th>User</th>
+								<th>Detail</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
 				</div>
-				<div class="col-md-4" style="background: black;">
+				
+				<div class="col-md-4" style="background: red; style="border: 1px solid lightgray;padding:15px;">
+					<table class="table table-dark table-striped table-sm" id="commuTable" style="text-align:center;">
+						<thead>
+							<tr>
+								<th>No.</th>
+								<th>User</th>
+								<th>Detail</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
 				</div>
+				
 			</div>
 			</main>
 		</div>
@@ -122,6 +151,8 @@
 					badword[0] = i+1;
 					badword[1] = badwords[i].word;
 					badword[2] = '<button class="btn btn-outline-danger" id="btn'+badwords[i].seq+'" onclick="deleteBadWordList('+badwords[i].seq+')">삭제하기</button>'
+					badword[3] = '<button class="btn btn-outline-primary" onclick="drawEtcTable(\''+badwords[i].word+'\')">리스트</button>'
+					
 					
 					data[i] = badword;
 				}
@@ -140,7 +171,7 @@
 	
 	$('#addBadWord').on('click', function () {
 		if($('#badText').val() == ''){
-			$('#badText').addClass('danger');
+			$('#badText').focus();
 		} else {
 			$.ajax({
 				url : 'AdminControl',
@@ -155,13 +186,7 @@
 			})
 		}
 	})
-	
-	$('#badText').on('change', function () {
-		if($(this).hasClass('danger')){
-			$(this).removeClass('danger');
-		}
-	})
-	
+
 	function deleteBadWordList(seq) {
 		$.ajax({
 			url : 'AdminControl',
@@ -172,6 +197,17 @@
 					$('#myTable').DataTable().destroy();
 					drawTable();
 				}
+			}
+		})
+	}
+	
+	function drawEtcTable(badword) {
+		$.ajax({
+			url : 'AdminControl',
+			data : { command : 'getEtcTable', badword : badword },
+			method : 'POST',
+			success : function (data) {
+				var test = JSON.parse(data);
 			}
 		})
 	}

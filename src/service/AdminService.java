@@ -1,5 +1,6 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -64,15 +65,15 @@ public class AdminService {
 	}
 
 	public List<AnimalBbsDto> getAllAnimalBbs() {
-		return bbsDao.getAllAnimalBbs();
+		return bbsDao.getAllAnimalBbs("");
 	}
 
 	public List<AfterBbsDto> getAllAfterBbs() {
-		return bbsDao.getAllAfterBbs();
+		return bbsDao.getAllAfterBbs("");
 	}
 
 	public List<CommuBbsDto> getAllCommuBbs() {
-		return bbsDao.getAllCommuBbs();
+		return bbsDao.getAllCommuBbs("");
 	}
 
 	public List<User> getAllUser() {
@@ -89,5 +90,19 @@ public class AdminService {
 	
 	public boolean deleteBadWord(int seq) {
 		return adminDao.deleteBadWord(seq);
+	}
+
+	public List<Object> getEtcTable(String badword) {
+		List<Object> list = new ArrayList<>();
+		
+		List<AnimalBbsDto> animalList = bbsDao.getAllAnimalBbs(badword);
+		List<AfterBbsDto> afterList = bbsDao.getAllAfterBbs(badword);
+		List<CommuBbsDto> commuList = bbsDao.getAllCommuBbs(badword);
+		
+		list.add(animalList);
+		list.add(afterList);
+		list.add(commuList);
+		
+		return list;
 	}
 }

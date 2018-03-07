@@ -162,6 +162,17 @@ public class AdminController extends HttpServlet {
 			String json = new Gson().toJson(result);
 			
 			resp.getWriter().write(json);
+		} else if(command.equals("getEtcTable")) {
+			
+			String badword = req.getParameter("badword");
+			
+			System.out.println(badword);
+			AdminService adminService = AdminService.getInstance();
+			List<Object> result = adminService.getEtcTable(badword);
+			
+			String json = new Gson().toJson(result);
+			
+			resp.getWriter().write(json);
 		}
 	}
 	
