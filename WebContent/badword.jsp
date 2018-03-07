@@ -39,7 +39,7 @@
 			</div>
 			
 			<div class="row">
-				<div class="col-md-6">
+				<div class="offset-md-3 col-md-6">
 					<div class="input-group mb-3">
 						<input type="text" class="form-control" placeholder="나쁜말을 사전에 추가하세요." id="badText">
 						<div class="input-group-append">
@@ -50,13 +50,12 @@
 			</div>
 
 			<div class="row">
-				<div class="table-responsive col-md-6" style="border: 1px solid lightgray;padding:15px;">
+				<div class="table-responsive offset-md-3 col-md-6" style="border: 1px solid lightgray;padding:15px;">
 					<table class="table table-dark table-striped table-sm" id="myTable" style="text-align:center;">
 						<thead>
 							<tr>
 								<th>No.</th>
 								<th>Word</th>
-								<th>Result</th>
 								<th>Delete</th>
 							</tr>
 						</thead>
@@ -65,21 +64,25 @@
 						</tbody>
 					</table>
 				</div>
-				
-				<div class="table-responsive col-md-6">
-					<table class="table table-striped table-sm" id="myTable2" style="text-align:center;">
+			</div>
+			
+			<div class="row">
+				<div class="col-md-4" style="background: red;">
+					<table class="table-responseive">
 						<thead>
 							<tr>
-								<th>No.</th>
-								<th>Word</th>
-								<th>Rank</th>
-								<th>Result</th>
+								<th>No</th>
+								<th>User</th>
+								<th>Detail</th>
 							</tr>
 						</thead>
 						<tbody>
-							
 						</tbody>
 					</table>
+				</div>
+				<div class="col-md-4" style="background: blue;">
+				</div>
+				<div class="col-md-4" style="background: black;">
 				</div>
 			</div>
 			</main>
@@ -118,8 +121,7 @@
 					var badword=[];
 					badword[0] = i+1;
 					badword[1] = badwords[i].word;
-					badword[2] = '<button class="btn btn-outline-secondary" onclick="showBadWordList('+badwords[i].seq+')">결과 보기</button>';
-					badword[3] = '<button class="btn btn-outline-danger" id="btn'+badwords[i].seq+'" onclick="deleteBadWordList('+badwords[i].seq+')">삭제하기</button>'
+					badword[2] = '<button class="btn btn-outline-danger" id="btn'+badwords[i].seq+'" onclick="deleteBadWordList('+badwords[i].seq+')">삭제하기</button>'
 					
 					data[i] = badword;
 				}

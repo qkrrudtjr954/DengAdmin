@@ -38,7 +38,7 @@
 					
 				</c:choose>
 				
-				<div id="calendar"></div>
+				<div id="calendar-area"></div>
 				
 				<div class="modal" tabindex="-1" role="dialog" id="addEvent">
 					<div class="modal-dialog" role="document">
@@ -289,7 +289,7 @@
 						events[i] = obj;
 					}
 					
-					$('#calendar').fullCalendar({
+					$('#calendar-area').fullCalendar({
 					    events: events,
 					    selectable: true,
 					    select: function (start, end, jsEvent, view) {
@@ -332,47 +332,6 @@
 				}
 			})
 		}
-		
-		//submit
-		$('#addEvent').on('click', function () {
-			//	add event with ajax
-			
-			//	result
-			
-			//	update events
-			$('#calendar').fullCalendar('updateEvents', function () {
-			
-			})
-		})
-			
-		
-		$('#my-button').click(function() {
-			// moment.month()
-			
-			
-		    var moment = $('#calendar').fullCalendar('getDate');
-		    alert("The current date of the calendar is " + moment.format());
-		});
-		
-		/*
-		 events data
-		 events: [
-		     {
-		         title  : 'event1',
-		         start  : '2018-02-03'
-		     },
-		     {
-		         title  : 'event2',
-		         start  : '2018-02-08',
-		         end    : '2018-02-09'
-		     },
-		     {
-		         title  : 'event3',
-		         start  : '2018-02-25T12:30:00',
-		         allDay : false // will make the time show
-		     }
-		 ]
-		 */
 		 
 		</script>
 </body>
