@@ -162,6 +162,40 @@ public class AdminController extends HttpServlet {
 			String json = new Gson().toJson(result);
 			
 			resp.getWriter().write(json);
+		} else if(command.equals("animalDetail")) {
+			int seq = Integer.parseInt(req.getParameter("seq"));
+			
+			AdminService adminService = AdminService.getInstance();
+			AnimalBbsDto animalDto = adminService.getAnimalBbs(seq);
+			
+			req.setAttribute("animalDto", animalDto);
+			dispatcher("animalDetail.jsp", req, resp);
+		}else if(command.equals("afterDetail")) {
+			int seq = Integer.parseInt(req.getParameter("seq"));
+			
+			AdminService adminService = AdminService.getInstance();
+			AfterBbsDto afterDto = adminService.getAfterBbs(seq);
+			
+			req.setAttribute("afterDto", afterDto);
+			dispatcher("afterDetail.jsp", req, resp);
+			
+		}else if(command.equals("commuDetail")) {
+			int seq = Integer.parseInt(req.getParameter("seq"));
+			
+			AdminService adminService = AdminService.getInstance();
+			CommuBbsDto commuDto = adminService.getCommuBbs(seq);
+			
+			req.setAttribute("commuDto", commuDto);
+			dispatcher("commuDetail.jsp", req, resp);
+			
+		}else if(command.equals("userDetail")) {
+			int seq = Integer.parseInt(req.getParameter("seq"));
+			
+			AdminService adminService = AdminService.getInstance();
+			User result = adminService.getUser(seq);
+			
+			req.setAttribute("result", result);
+			dispatcher("userDetail.jsp", req, resp);
 		}
 	}
 	

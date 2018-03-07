@@ -90,4 +90,20 @@ public class AdminService {
 	public boolean deleteBadWord(int seq) {
 		return adminDao.deleteBadWord(seq);
 	}
+	
+	public AnimalBbsDto getAnimalBbs(int seq) {
+		return bbsDao.getAnimalBbs(seq);
+	}
+	
+	public AfterBbsDto getAfterBbs(int seq) {
+		return bbsDao.getAfterBbs(seq);
+	}
+	
+	public CommuBbsDto getCommuBbs(int seq) {
+		return bbsDao.getCommuBbs(seq);
+	}
+	
+	public User getUser(int seq) {
+		return userDao.getUser(seq);
+	}
 }
