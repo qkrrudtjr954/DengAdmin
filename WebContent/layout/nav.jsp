@@ -38,6 +38,11 @@
 					<span data-feather="calendar"></span> 행사 일정 등록 
 				</a>
 			</li>
+			<li class="nav-item menu-link">
+				<a class="nav-link" href="AdminControl?command=category" id="category"> 
+					<span data-feather="align-center"></span> 게시판 메뉴 등록 
+				</a>
+			</li>
 		</ul>
 
 		<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">

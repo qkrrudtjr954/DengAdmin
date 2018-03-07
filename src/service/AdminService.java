@@ -11,6 +11,7 @@ import dto.AfterBbsDto;
 import dto.AnimalBbsDto;
 import dto.BadWord;
 import dto.CalendarDto;
+import dto.Category;
 import dto.CommuBbsDto;
 import dto.GraphDayDto;
 import dto.User;
@@ -120,5 +121,21 @@ public class AdminService {
 
 	public User getUser(int seq) {
 		return userDao.getUser(seq);
+	}
+
+	public List<Category> getAllCategories() {
+		return adminDao.getAllCategories();
+	}
+
+	public boolean changeCategoryStatus(int seq, int status) {
+		return adminDao.changeCategoryStatus(seq, status);
+	}
+
+	public boolean addCategory(Category category) {
+		return adminDao.addCategory(category);
+	}
+
+	public boolean deleteCategory(int seq) {
+		return adminDao.deleteCategory(seq);
 	}
 }

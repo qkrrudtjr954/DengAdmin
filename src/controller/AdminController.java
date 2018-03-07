@@ -17,6 +17,7 @@ import dto.AfterBbsDto;
 import dto.AnimalBbsDto;
 import dto.BadWord;
 import dto.CalendarDto;
+import dto.Category;
 import dto.CommuBbsDto;
 import dto.GraphDayDto;
 import dto.User;
@@ -77,6 +78,19 @@ public class AdminController extends HttpServlet {
 		} else if(command.equals("badWord")) {
 
 			dispatcher("badword.jsp", req, resp);
+
+		} else if(command.equals("category")) {
+
+			dispatcher("category.jsp", req, resp);
+
+		}else if(command.equals("getCategories")) {
+
+			AdminService adminService = AdminService.getInstance();
+			List<Category> categories = adminService.getAllCategories();
+			
+			String json = new Gson().toJson(categories);
+			
+			resp.getWriter().write(json);
 
 		} else if(command.equals("drowInfo")) {
 			AdminService adminService = AdminService.getInstance();
@@ -174,6 +188,51 @@ public class AdminController extends HttpServlet {
 			String json = new Gson().toJson(result);
 
 			resp.getWriter().write(json);
+		} else if(command.equals("changeState")) {
+
+			String tempStatus = req.getParameter("status");
+			String tempSeq = req.getParameter("seq");
+			
+			// 200 is now service
+			// 404 is new teminated
+			// 200 이면 404로 바꾸고 404면 200으로 바꾼다. 
+			int status = (tempStatus.equals("200")) ? 404 : 200;
+			int seq = Integer.parseInt(tempSeq);
+			
+			AdminService adminService = AdminService.getInstance();
+			boolean result = adminService.changeCategoryStatus(seq, status);
+			
+			
+			String json = new Gson().toJson(result);
+
+			resp.getWriter().write(json);
+		} else if(command.equals("addCategory")) {
+
+			String title = req.getParameter("title");
+			String description = req.getParameter("description");
+			String tempStatus = req.getParameter("status");
+			int status = Integer.parseInt(tempStatus);
+			
+			AdminService adminService = AdminService.getInstance();
+			Category category = new Category(title, description, status);
+			boolean result = adminService.addCategory(category);
+			
+			String json = new Gson().toJson(result);
+
+			resp.getWriter().write(json);
+			
+		} else if(command.equals("deleteCategory")) {
+
+			String tempSeq = req.getParameter("seq");
+			int seq = Integer.parseInt(tempSeq);
+			
+			AdminService adminService = AdminService.getInstance();
+			boolean result = adminService.deleteCategory(seq);
+			
+			String json = new Gson().toJson(result);
+
+			resp.getWriter().write(json);
+			
 		} else if(command.equals("animalDetail")) {
 			int seq = Integer.parseInt(req.getParameter("seq"));
 
@@ -208,7 +267,6 @@ public class AdminController extends HttpServlet {
 
 			req.setAttribute("result", result);
 			dispatcher("userDetail.jsp", req, resp);
-
 		}
 	}
 

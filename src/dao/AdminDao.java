@@ -14,6 +14,7 @@ import db.DBClose;
 import db.DBConnection;
 import dto.BadWord;
 import dto.CalendarDto;
+import dto.Category;
 import dto.GraphDayDto;
 
 public class AdminDao {
@@ -360,6 +361,110 @@ public class AdminDao {
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, seq);
+			count = psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		return (count > 0)?true : false;
+	}
+
+	public List<Category> getAllCategories() {
+		// TODO Auto-generated method stub
+		String sql = " select * from category ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		List<Category> list = new ArrayList<>();
+		
+		try {
+			conn = DBConnection.makeConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				Category category = new Category();
+				category.setDescription(rs.getString("description"));
+				category.setReg_date(rs.getString("reg_date"));
+				category.setSeq(rs.getInt("seq"));
+				category.setStatus(rs.getInt("status"));
+				category.setTitle(rs.getString("title"));
+				
+				list.add(category);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	}
+
+	public boolean changeCategoryStatus(int seq, int status) {
+		String sql = " update category set status = ? where seq = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		conn = DBConnection.makeConnection();
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, status);
+			psmt.setInt(2, seq);
+			count = psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		return (count > 0)?true : false;
+	}
+
+	public boolean addCategory(Category category) {
+		String sql = " insert into category(seq, title, description, status, reg_date)"
+				+ " values(category_seq.nextval, ?, ?, ?, sysdate ) ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		conn = DBConnection.makeConnection();
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, category.getTitle());
+			psmt.setString(2, category.getDescription());
+			psmt.setInt(3, category.getStatus());
+			
+			count = psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		return (count > 0)?true : false;
+	}
+
+	public boolean deleteCategory(int seq) {
+		String sql = "delete from category where seq = ?";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		conn = DBConnection.makeConnection();
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			
 			count = psmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
