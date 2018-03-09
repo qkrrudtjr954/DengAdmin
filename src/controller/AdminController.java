@@ -156,6 +156,7 @@ public class AdminController extends HttpServlet {
 			resp.sendRedirect("AdminControl?command=calendar");
 
 		} else if(command.equals("deleteEvent")) {
+			System.out.println(command);
 			int seq = Integer.parseInt(req.getParameter("seq"));
 
 			AdminService adminService = AdminService.getInstance();

@@ -341,8 +341,8 @@
 		function deleteEvent(seq) {
 			if(confirm('정말 삭제하겠습니까?')){
 				$.ajax({
-					url: 'deleteEvent',
-					data : { seq : seq },
+					url: 'AdminControl',
+					data : { seq : seq, command : 'deleteEvent' },
 					method : 'GET',
 					success : function (data) {
 						if(data =='true'){
@@ -350,7 +350,7 @@
 						}else {						
 							alert('삭제할 수 없습니다. ');
 						}
-						drawCalendar();
+						location.reload();
 					}
 				})
 			}
