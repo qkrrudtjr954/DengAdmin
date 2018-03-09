@@ -155,6 +155,15 @@ public class AdminController extends HttpServlet {
 			resp.addCookie(cookie);
 			resp.sendRedirect("AdminControl?command=calendar");
 
+		} else if(command.equals("deleteEvent")) {
+			int seq = Integer.parseInt(req.getParameter("seq"));
+
+			AdminService adminService = AdminService.getInstance();
+			boolean result = adminService.deleteEvent(seq);
+			
+			String json = new Gson().toJson(result);
+			
+			resp.getWriter().write(json);
 		} else if(command.equals("getBadWords")) {
 			AdminService adminService = AdminService.getInstance();
 			List<BadWord> badwords = adminService.getAllBadWord();
@@ -316,10 +325,43 @@ public class AdminController extends HttpServlet {
 			int seq = Integer.parseInt(req.getParameter("seq"));
 
 			AdminService adminService = AdminService.getInstance();
-			User result = adminService.getUser(seq);
-
-			req.setAttribute("result", result);
+			User userDto = adminService.getUser(seq);
+			
+			req.setAttribute("userDto", userDto);
 			dispatcher("userDetail.jsp", req, resp);
+		} else if(command.equals("getLikedTable")){
+			int seq = Integer.parseInt(req.getParameter("seq"));
+			
+			AdminService adminService = AdminService.getInstance();
+			List<Object> list = adminService.getLikedBbs(seq);
+			
+			String json = new Gson().toJson(list);
+			
+			resp.getWriter().write(json);
+		} else if(command.equals("animalDelete")) {
+			int seq = Integer.parseInt(req.getParameter("seq"));
+
+			AdminService adminService = AdminService.getInstance();
+			boolean result = adminService.deleteBbsByAdmin("animalbbs", seq);
+			
+			String json = new Gson().toJson(result);
+			resp.getWriter().write(json);
+		}else if(command.equals("afterlDelete")) {
+			int seq = Integer.parseInt(req.getParameter("seq"));
+
+			AdminService adminService = AdminService.getInstance();
+			boolean result = adminService.deleteBbsByAdmin("afterbbs", seq);
+			
+			String json = new Gson().toJson(result);
+			resp.getWriter().write(json);
+		}else if(command.equals("commuDelete")) {
+			int seq = Integer.parseInt(req.getParameter("seq"));
+
+			AdminService adminService = AdminService.getInstance();
+			boolean result = adminService.deleteBbsByAdmin("commubbs", seq);
+			
+			String json = new Gson().toJson(result);
+			resp.getWriter().write(json);
 		}
 	}
 

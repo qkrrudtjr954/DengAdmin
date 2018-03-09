@@ -137,7 +137,7 @@
 								<div id="map2"></div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-primary" id="addEvent">일정 등록하기</button>
+								<button type="button" class="btn btn-primary" id="deleteEvent" >일정 삭제</button>
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 							</div>
 						</div>
@@ -271,6 +271,12 @@
 	<script type="text/javascript">
 	
 		$(document).ready(function() {
+			
+		    drawCalendar();
+			
+		});
+		
+		function drawCalendar() {
 			$.ajax({
 				url : 'AdminControl',
 				data : { command : 'getEvents' },
@@ -307,9 +313,7 @@
 				    })
 				}
 			})
-		    
-			
-		});
+		}
 		
 		function showEvent(target) {
 			$.ajax({
@@ -324,6 +328,7 @@
 					$('#end2').html(event.end);
 					$('.show-event-location').html(event.location);
 					$('.show-event-content').html(event.content);
+					$('button#deleteEvent').attr('onclick', 'deleteEvent('+event.seq+')');
 					
 					var mapContainer = document.getElementById('map2');
 					$('#map2').css('width', '100%');
@@ -331,6 +336,24 @@
 					drowMap(event.location, mapContainer);
 				}
 			})
+		}
+		
+		function deleteEvent(seq) {
+			if(confirm('정말 삭제하겠습니까?')){
+				$.ajax({
+					url: 'deleteEvent',
+					data : { seq : seq },
+					method : 'GET',
+					success : function (data) {
+						if(data =='true'){
+							alert('삭제 되었습니다. ');
+						}else {						
+							alert('삭제할 수 없습니다. ');
+						}
+						drawCalendar();
+					}
+				})
+			}
 		}
 		 
 		</script>

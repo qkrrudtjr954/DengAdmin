@@ -12,6 +12,7 @@ import java.util.List;
 
 import db.DBClose;
 import db.DBConnection;
+import dto.AfterBbsDto;
 import dto.BadWord;
 import dto.CalendarDto;
 import dto.Category;
@@ -586,6 +587,54 @@ public class AdminDao {
 		int count = 0;
 		
 		System.out.println(".addInquiry() sql : "+sql);
+		
+		conn = DBConnection.makeConnection();
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			
+			count = psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		return (count > 0)?true : false;
+	}
+
+	public boolean deleteBbsByAdmin(String tablename, int seq) {
+		String sql = " update "+tablename+" set del = 2 where seq = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		System.out.println(".deleteBbsByAdmin() sql : "+sql);
+		
+		conn = DBConnection.makeConnection();
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			
+			count = psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		return (count > 0)?true : false;
+	}
+
+	public boolean deleteEvent(int seq) {
+		String sql = " delete from event where seq = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		System.out.println(".deleteEvent() sql : "+sql);
 		
 		conn = DBConnection.makeConnection();
 		try {

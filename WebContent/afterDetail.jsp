@@ -37,11 +37,23 @@
 					</button>
 				</div>
 			</div>
-			<%
-				AfterBbsDto afterDto = (AfterBbsDto)request.getAttribute("afterDto");
-				//System.out.println(afterDto.toString());
-			%>
-			<div class="table-responsive">
+			<div class="d-flex">
+					<div class="p-3">
+						<h3>${afterDto.user_email }</h3>
+						<button class="btn btn-outline-danger" onclick="forceDelete(${afterDto.seq })">관리자 권한 삭제</button>
+					</div>
+					<div class="ml-auto p-3">					
+						<fmt:parseDate value="${afterDto.reg_date }" pattern="yyyy-MM-dd HH:mm:ss.S" var="tempRegDate"/>
+						<fmt:formatDate value="${tempRegDate }" pattern="yyyy년 MM월 dd일 HH시 mm분" var="regDate"/>
+						<p>
+							${regDate }<br>
+							조회수 : ${afterDto.read_count }
+						</p>
+					</div>
+				</div>
+			<hr>
+			<div class="row">				
+			<div class="table-responsive col-md-8">
 				<table border="1" id="myTable" class="table table-striped">
 					<tr>
 						<th>No.</th>
@@ -56,24 +68,26 @@
 						<td>${afterDto.pic1 }</td>
 					</tr>
 					<tr>
-						<th>Target_user_seq.</th>
-						<td>${afterDto.target_user_seq }</td>
-					</tr>
-					<tr>
-						<th>Reg_date.</th>
-						<td>${afterDto.reg_date }</td>
+						<th>UserDetail</th>
+						<td><a href="AdminControl?command=userDetail&seq=${afterDto.target_user_seq }">유저 정보 보기</a></td>
 					</tr>
 					<tr>
 						<th>Del.</th>
-						<td>${afterDto.del }</td>
-					</tr>
-					<tr>
-						<th>Read_count.</th>
-						<td>${afterDto.read_count }</td>
-					</tr>
-					<tr>
-						<th>User_email.</th>
-						<td>${afterDto.user_email }</td>
+						<td>
+						<c:choose>
+							<c:when test="${afterDto.del ==0 }">
+								<span data-feather="thumbs-up" style="color: green;"></span> 게시중 
+							</c:when>
+							
+							<c:when test="${afterDto.del ==1 }">
+								<span data-feather="x-circle" style="color:red;"></span> 삭제됨 
+							</c:when>
+							
+							<c:when test="${afterDto.del ==2 }">
+								<span data-feather="user-x" style="color:red;"></span> 관리자에 의해 삭제됨 
+							</c:when>
+						</c:choose>
+						</td>
 					</tr>
 					<tr>
 						<th>Content.</th>
@@ -81,7 +95,7 @@
 					</tr>
 				</table>
 			</div>
-			
+			</div>
 			
 			</main>
 		</div>
@@ -98,7 +112,23 @@
 	<script>
       feather.replace()
     </script>
-
+	<script type="text/javascript">
+		
+		function forceDelete(seq) {
+			$.ajax({
+				url : 'AdminControl',
+				data : {command : 'afterDelete', seq : seq },
+				method : 'POST',
+				success : function (data) {
+					if(data == 'true'){
+						location.reload();
+					} else {
+						alert('삭제를 할 수 없습니다.');
+					}
+				}
+			})
+		}
+	</script>
 </body>
 
 </html>

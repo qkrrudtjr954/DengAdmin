@@ -155,4 +155,26 @@ public class AdminService {
 	public boolean changeStatus(int seq) {
 		return adminDao.changeStatus(seq);
 	}
+
+	public boolean deleteBbsByAdmin(String tablename, int seq) {
+		return adminDao.deleteBbsByAdmin(tablename, seq);
+	}
+
+	public List<Object> getLikedBbs(int seq) {
+		List<Object> list = new ArrayList<>();
+		
+		List<AfterBbsDto> afters = bbsDao.getLikeAfterdBbs(seq);
+		List<AnimalBbsDto> animals = bbsDao.getLikedAnimalBbs(seq);
+		List<CommuBbsDto> commus = bbsDao.getLikedCommuBbs(seq);
+		
+		list.add(afters);
+		list.add(animals);
+		list.add(commus);
+		
+		return list;
+	}
+
+	public boolean deleteEvent(int seq) {
+		return adminDao.deleteEvent(seq);
+	}
 }

@@ -116,3 +116,9 @@ body {
 .show-event-range div.col {
 	text-align : center;
 }
+
+
+span.bbs-title {
+    font-size: 25px;
+    font-weight: bold;
+}

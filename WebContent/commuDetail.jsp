@@ -37,12 +37,24 @@
 					</button>
 				</div>
 			</div>
-			<%
-				CommuBbsDto commuDto = (CommuBbsDto)request.getAttribute("commuDto");
-				//System.out.println(commuDto.toString());
-			%>
-			<div class="table-responsive">
-				<table border="1" id="myTable">
+			<div class="d-flex">
+				<div class="p-3">
+					<h3>${commuDto.user_email }</h3>
+					<button class="btn btn-outline-danger" onclick="forceDelete(${commuDto.seq })">관리자 권한 삭제</button>
+				</div>
+				<div class="ml-auto p-3">					
+					<fmt:parseDate value="${commuDto.reg_date }" pattern="yyyy-MM-dd HH:mm:ss.S" var="tempRegDate"/>
+					<fmt:formatDate value="${tempRegDate }" pattern="yyyy년 MM월 dd일 HH시 mm분" var="regDate"/>
+					<p>
+						${regDate }<br>
+						조회수 : ${commuDto.readcount }
+					</p>
+				</div>
+			</div>
+			<hr>
+			<div class="row">	
+			<div class="table-responsive offset-md-2 col-md-8">
+				<table border="1" id="myTable" class="table table-striped">
 					<tr>
 						<th>No.</th>
 						<td>${commuDto.seq }</td>
@@ -56,20 +68,14 @@
 						<td>${commuDto.pic1 }</td>
 					</tr>
 					<tr>
-						<th>Target_user_seq.</th>
-						<td>${commuDto.target_user_seq }</td>
+						<th>UserDetail</th>
+						<td><a href="AdminControl?command=userDetail&seq=${animalDto.target_user_seq }">유저 정보 보기</a></td>
 					</tr>
 					<tr>
-						<th> Target_category.</th>
-						<td>${commuDto. target_category }</td>
-					</tr>
-					<tr>
-						<th>Readcount.</th>
-						<td>${commuDto.readcount }</td>
-					</tr>
-					<tr>
-						<th>Reg_date.</th>
-						<td>${commuDto.reg_date }</td>
+						<th>Category_name.</th>
+						<td>
+							${commuDto.category_name }
+						</td>
 					</tr>
 					<tr>
 						<th>Last_update.</th>
@@ -77,15 +83,21 @@
 					</tr>
 					<tr>
 						<th>Del.</th>
-						<td>${commuDto.del }</td>
-					</tr>
-					<tr>
-						<th>Category_name.</th>
-						<td>${commuDto.category_name }</td>
-					</tr>
-					<tr>
-						<th>User_email.</th>
-						<td>${commuDto.user_email }</td>
+						<td>
+						<c:choose>
+							<c:when test="${commuDto.del ==0 }">
+								<span data-feather="thumbs-up" style="color: green;"></span> 게시중 
+							</c:when>
+							
+							<c:when test="${commuDto.del ==1 }">
+								<span data-feather="x-circle" style="color:red;"></span> 삭제됨 
+							</c:when>
+							
+							<c:when test="${commuDto.del ==2 }">
+								<span data-feather="user-x" style="color:red;"></span> 관리자에 의해 삭제됨 
+							</c:when>
+						</c:choose>
+						</td>
 					</tr>
 					<tr>
 						<th>Content.</th>
@@ -94,7 +106,7 @@
 					
 				</table>
 			</div>
-			
+			</div>
 			</main>
 		</div>
 	</div>
@@ -110,7 +122,23 @@
 	<script>
       feather.replace()
     </script>
-
+	<script type="text/javascript">
+		
+		function forceDelete(seq) {
+			$.ajax({
+				url : 'AdminControl',
+				data : {command : 'commuDelete', seq : seq },
+				method : 'POST',
+				success : function (data) {
+					if(data == 'true'){
+						location.reload();
+					} else {
+						alert('삭제를 할 수 없습니다.');
+					}
+				}
+			})
+		}
+	</script>
 </body>
 
 </html>
