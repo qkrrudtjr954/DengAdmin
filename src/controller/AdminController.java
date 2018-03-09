@@ -42,7 +42,7 @@ public class AdminController extends HttpServlet {
 		resp.setContentType("text/html; charset=UTF-8");
 
 		String command = req.getParameter("command");
-
+		System.out.println(command);
 		if(command.equals("main")) {
 			dispatcher("index.jsp", req, resp);
 		} else if(command.equals("animalList")) {
@@ -347,7 +347,7 @@ public class AdminController extends HttpServlet {
 			
 			String json = new Gson().toJson(result);
 			resp.getWriter().write(json);
-		}else if(command.equals("afterlDelete")) {
+		}else if(command.equals("afterDelete")) {
 			int seq = Integer.parseInt(req.getParameter("seq"));
 
 			AdminService adminService = AdminService.getInstance();

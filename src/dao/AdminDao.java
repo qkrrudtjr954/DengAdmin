@@ -169,7 +169,8 @@ public class AdminDao {
 				"	group by to_char(reg_date, 'YYYY-MM-DD') " + 
 				"	having to_char(reg_date, 'YYYY-MM-DD') <= ? " + 
 				" ) o " + 
-				" where rownum <= 10 ";
+				" where rownum <= 10 " +
+				"order by o.days asc";
 		
 		Connection conn = DBConnection.makeConnection();
 		PreparedStatement psmt = null;
